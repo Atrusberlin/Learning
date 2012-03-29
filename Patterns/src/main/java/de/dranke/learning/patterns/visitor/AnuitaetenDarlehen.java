@@ -4,7 +4,7 @@ package de.dranke.learning.patterns.visitor;
 public class AnuitaetenDarlehen extends Darlehen {
 
   @Override
-  void accept(Visitor visitor) {
-    visitor.displayDarlehen(this);
+  String display(Visitor visitor) {
+    return visitor.displayDarlehen(this);
   }
 }
