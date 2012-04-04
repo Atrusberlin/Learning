@@ -1,5 +1,4 @@
-﻿use
-learn;
+﻿use learn;
 // leeren der Collection durch entfernen der selben
 // db.unicorns.drop();
 db.unicorns.remove();
