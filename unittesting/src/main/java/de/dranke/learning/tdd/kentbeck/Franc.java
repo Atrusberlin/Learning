@@ -7,9 +7,7 @@ package de.dranke.learning.tdd.kentbeck;
  * Time: 21:52
  * To change this template use File | Settings | File Templates.
  */
-public class Franc {
-
-  private int amount;
+public class Franc extends Money{
 
   Franc(int amount) {
     this.amount = amount;
@@ -19,9 +17,4 @@ public class Franc {
     return new Franc(amount * multiplier);
   }
 
-  @Override
-  public boolean equals(Object obj) {
-    Franc franc = (Franc) obj;
-    return amount == franc.amount;
-  }
 }
