@@ -12,7 +12,6 @@ out/**
 tomcat/**
 *.ipr
 *.iws
-*.iml
 .DS_Store
 *~
 *.swp
