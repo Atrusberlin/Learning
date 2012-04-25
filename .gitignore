@@ -5,6 +5,7 @@ target/**
 */*/out/**
 */out/**
 out/**
+.idea
 .idea/**
 */*/tomcat/**
 */tomcat/**
@@ -15,3 +16,4 @@ tomcat/**
 .DS_Store
 *~
 *.swp
+.dbshell

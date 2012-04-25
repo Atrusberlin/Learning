@@ -7,13 +7,13 @@ package de.dranke.learning.tdd.kentbeck;
  * Time: 21:52
  * To change this template use File | Settings | File Templates.
  */
-public class Franc extends Money{
+public class Franc extends Money {
 
   Franc(int amount) {
     this.amount = amount;
   }
 
-  Franc times(int multiplier) {
+  Money times(int multiplier) {
     return new Franc(amount * multiplier);
   }
 

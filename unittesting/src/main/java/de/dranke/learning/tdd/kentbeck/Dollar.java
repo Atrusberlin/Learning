@@ -7,13 +7,13 @@ package de.dranke.learning.tdd.kentbeck;
  * Time: 21:52
  * To change this template use File | Settings | File Templates.
  */
-public class Dollar extends Money{
+public class Dollar extends Money {
 
   Dollar(int amount) {
     this.amount = amount;
   }
 
-  Dollar times(int multiplier) {
+  Money times(int multiplier) {
     return new Dollar(amount * multiplier);
   }
 
