@@ -7,7 +7,7 @@ package de.dranke.learning.tdd.kentbeck;
  * Time: 22:28
  * To change this template use File | Settings | File Templates.
  */
-public class Money {
+public class Money implements Expression {
 
   protected int amount;
   protected String currency;
@@ -29,15 +29,19 @@ public class Money {
     return new Money(amount * multiplier, currency);
   }
 
+  Expression plus(Money addend) {
+    return new Money(amount + addend.amount, currency);
+  }
+
   String currency() {
     return currency;
   }
+
 
   @Override
   public String toString() {
     return amount + " " + currency;
   }
-
 
   @Override
   public boolean equals(Object obj) {
