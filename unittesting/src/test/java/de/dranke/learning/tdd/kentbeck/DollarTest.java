@@ -3,8 +3,6 @@ package de.dranke.learning.tdd.kentbeck;
 import org.testng.annotations.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,12 +12,12 @@ import static junit.framework.Assert.assertTrue;
  * To change this template use File | Settings | File Templates.
  */
 public class DollarTest {
-  
+
   @Test
-  public void testMultiplications() {
-    Dollar five = new Dollar(5);
-    assertEquals(new Dollar(10), five.times(2));
-    assertEquals(new Dollar(15), five.times(3));
+  public void testDollarMultiplications() {
+    Dollar five = new Dollar(5, "USD");
+    assertEquals(new Dollar(10, "USD"), five.times(2));
+    assertEquals(new Dollar(15, "USD"), five.times(3));
   }
 
 
