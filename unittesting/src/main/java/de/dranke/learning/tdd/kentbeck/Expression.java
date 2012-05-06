@@ -9,4 +9,6 @@ package de.dranke.learning.tdd.kentbeck;
  */
 public interface Expression {
   Money reduce(Bank bank, String to);
+
+
 }
