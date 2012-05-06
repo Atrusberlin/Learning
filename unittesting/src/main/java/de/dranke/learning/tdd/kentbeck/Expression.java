@@ -8,5 +8,5 @@ package de.dranke.learning.tdd.kentbeck;
  * To change this template use File | Settings | File Templates.
  */
 public interface Expression {
-  Money reduce(String to);
+  Money reduce(Bank bank, String to);
 }
