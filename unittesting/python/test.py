@@ -1,5 +1,8 @@
-test= WasRun("TestMethod")
-print test.wasRun
+open('WasRun.py','r',-1)
+
+test= WasRun("testMethod")
 test.testMethod()
-print test.wasRun
+print (test)
+test.testMethod()
+print (test.wasRun)
 
