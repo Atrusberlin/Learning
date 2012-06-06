@@ -1,20 +1,13 @@
 package de.dranke.learning.mongodb.api;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import com.mongodb.*;
+import org.testng.annotations.*;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-/** Created by IntelliJ IDEA. User: daniel.ranke Date: 25.04.12 Time: 09:35 To change this template use File | Settings | File Templates. */
+/**
+ * Created by IntelliJ IDEA. User: daniel.ranke Date: 25.04.12 Time: 09:35 To change this template use File | Settings | File Templates.
+ */
 public class CollectionsTest {
 
   public static final String TEST_COLLECTION = "testCollection";
@@ -65,10 +58,10 @@ public class CollectionsTest {
 
   @DataProvider
   public Object[][] collectionGroessen() {
-    return new Object[][] {
-        {1024},
-        {2048},
-        {8}
+    return new Object[][]{
+        {100000},
+        {200000},
+        {400000}
     };
   }
 
@@ -76,7 +69,7 @@ public class CollectionsTest {
   public void erstelle_neue_collection_mit_createCollection_und_initialer_groesse(Integer initSize) {
     // given
     assertThat(db.getCollectionNames()).isNotIn(TEST_COLLECTION);
-    DBObject configuration = (DBObject) new BasicDBObject();
+    DBObject configuration = new BasicDBObject();
     configuration.put("size", initSize.toString());
     // when
     collection = db.createCollection(TEST_COLLECTION, configuration);
