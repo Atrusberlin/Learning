@@ -11,7 +11,8 @@
   <modules>
     <module>MongoDB</module>
     <module>Patterns</module>
-      <module>unittesting</module>
+    <module>unittesting</module>
+    <module>multithreading</module>
   </modules>
 
   <dependencies>
