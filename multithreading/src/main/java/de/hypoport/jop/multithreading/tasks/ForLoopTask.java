@@ -1,6 +1,6 @@
-package tasks;
+package de.hypoport.jop.multithreading.tasks;
 
-import static utils.TestUtils.log;
+import static de.hypoport.jop.multithreading.utils.TestUtils.log;
 
 public class ForLoopTask extends AbstractForLoopTask {
 

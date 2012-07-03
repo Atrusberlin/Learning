@@ -1,9 +1,9 @@
-package tasks;
+package de.hypoport.jop.multithreading.tasks;
 
 import java.math.BigInteger;
 import java.util.concurrent.Callable;
 
-import static utils.TestUtils.log;
+import static de.hypoport.jop.multithreading.utils.TestUtils.log;
 
 public abstract class AbstractForLoopTask implements Runnable, Callable<BigInteger> {
 

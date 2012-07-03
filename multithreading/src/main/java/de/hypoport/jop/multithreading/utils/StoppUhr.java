@@ -1,4 +1,4 @@
-package utils;
+package de.hypoport.jop.multithreading.utils;
 
 import java.util.Date;
 

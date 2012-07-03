@@ -1,19 +1,18 @@
-package tests;
+package de.hypoport.jop.multithreading;
 
-import org.junit.Before;
-import org.junit.Test;
-import tasks.AbstractForLoopTask;
-import tasks.ForLoopTask;
-import tasks.SleepTask;
-import tasks.advanced.InterruptableForLoopTask;
+import de.hypoport.jop.multithreading.tasks.AbstractForLoopTask;
+import de.hypoport.jop.multithreading.tasks.ForLoopTask;
+import de.hypoport.jop.multithreading.tasks.SleepTask;
+import de.hypoport.jop.multithreading.tasks.advanced.InterruptableForLoopTask;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
-import static utils.TestUtils.log;
-import static utils.TestUtils.sleep;
+import static de.hypoport.jop.multithreading.utils.TestUtils.log;
+import static de.hypoport.jop.multithreading.utils.TestUtils.sleep;
 
 public class StopTasksTests {
 
@@ -22,7 +21,7 @@ public class StopTasksTests {
   private SleepTask sleepTask;
   private InterruptableForLoopTask interruptableForLoopTask;
 
-  @Before
+  @BeforeMethod
   public void init() {
     executorService = Executors.newSingleThreadExecutor();
     forLoopTask = new ForLoopTask(100_000);

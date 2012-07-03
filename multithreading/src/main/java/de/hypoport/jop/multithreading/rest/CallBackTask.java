@@ -1,6 +1,6 @@
-package rest;
+package de.hypoport.jop.multithreading.rest;
 
-import utils.StoppUhr;
+import de.hypoport.jop.multithreading.utils.StoppUhr;
 
 import java.util.concurrent.Callable;
 
@@ -27,9 +27,11 @@ public class CallBackTask implements Callable {
       Thread.sleep(1000);
       // loop that just concatenate a str to simulate
       // work on the result form remote call
-      for (int index = 0; index < 20000; index++) { str = str + 't'; }
+      for (int index = 0; index < 20000; index++) {
+        str = str + 't';
+      }
+    } catch (InterruptedException e) {
     }
-    catch (InterruptedException e) {}
 
     callBackTest.callBack(seq);
 

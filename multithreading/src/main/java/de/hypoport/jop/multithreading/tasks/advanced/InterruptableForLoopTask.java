@@ -1,11 +1,10 @@
-package tasks.advanced;
+package de.hypoport.jop.multithreading.tasks.advanced;
 
-import tasks.AbstractForLoopTask;
-import tasks.ForLoopTask;
+import de.hypoport.jop.multithreading.tasks.AbstractForLoopTask;
 
 import java.util.concurrent.CancellationException;
 
-import static utils.TestUtils.log;
+import static de.hypoport.jop.multithreading.utils.TestUtils.log;
 
 public class InterruptableForLoopTask extends AbstractForLoopTask {
 

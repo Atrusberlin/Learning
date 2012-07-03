@@ -1,10 +1,13 @@
-package rest.threadtest;
+package de.hypoport.jop.multithreading.rest.threadtest;
 
-import utils.StoppUhr;
+import de.hypoport.jop.multithreading.utils.StoppUhr;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class ExecutorServiceTest {
 
@@ -41,9 +44,9 @@ public class ExecutorServiceTest {
       try {
         taskResult = future.get();
 //        System.out.println("Ergebnis aus future " + taskResult);
+      } catch (InterruptedException e) {
+      } catch (ExecutionException e) {
       }
-      catch (InterruptedException e) {}
-      catch (ExecutionException e) {}
     }
   }
 

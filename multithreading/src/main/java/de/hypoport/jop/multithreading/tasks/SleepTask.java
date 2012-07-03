@@ -1,7 +1,7 @@
-package tasks;
+package de.hypoport.jop.multithreading.tasks;
 
-import static utils.TestUtils.log;
-import static utils.TestUtils.sleep;
+import static de.hypoport.jop.multithreading.utils.TestUtils.log;
+import static de.hypoport.jop.multithreading.utils.TestUtils.sleep;
 
 public class SleepTask implements Runnable {
 
@@ -14,8 +14,7 @@ public class SleepTask implements Runnable {
       log(this + " starts ...");
       sleep(30_000);
       log(this + " ...finished");
-    }
-    catch (InterruptedException e) {
+    } catch (InterruptedException e) {
       log(e);
     }
   }

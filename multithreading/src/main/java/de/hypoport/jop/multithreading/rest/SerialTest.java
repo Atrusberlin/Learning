@@ -1,6 +1,6 @@
-package rest;
+package de.hypoport.jop.multithreading.rest;
 
-import rest.threadtest.Aufgabe;
+import de.hypoport.jop.multithreading.rest.threadtest.Aufgabe;
 
 public class SerialTest {
 

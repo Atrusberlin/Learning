@@ -1,26 +1,16 @@
-package tests;
+package de.hypoport.jop.multithreading;
 
-import org.junit.Test;
-import tasks.ForLoopTask;
-import tasks.SleepTask;
-import tasks.advanced.InterruptableForLoopTask;
+import de.hypoport.jop.multithreading.tasks.ForLoopTask;
+import org.testng.annotations.Test;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
-import static utils.TestUtils.log;
-import static utils.TestUtils.sleep;
+import static de.hypoport.jop.multithreading.utils.TestUtils.log;
+import static de.hypoport.jop.multithreading.utils.TestUtils.sleep;
 
 public class StartTasksTests {
 
@@ -65,11 +55,11 @@ public class StartTasksTests {
     long keepAliveTime = 100_000;
     BlockingQueue<Runnable> taskQueue = new ArrayBlockingQueue<Runnable>(5);
     ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(coreSizeDesThreadPools,
-                                                                   maxPoolSize,
-                                                                   keepAliveTime,
-                                                                   TimeUnit.SECONDS,
-                                                                   taskQueue,
-                                                                   Executors.defaultThreadFactory()) {
+        maxPoolSize,
+        keepAliveTime,
+        TimeUnit.SECONDS,
+        taskQueue,
+        Executors.defaultThreadFactory()) {
       @Override
       protected void beforeExecute(Thread thread, Runnable runnable) {
         super.beforeExecute(thread, runnable);

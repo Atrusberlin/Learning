@@ -1,6 +1,6 @@
-package rest.threadtest;
+package de.hypoport.jop.multithreading.rest.threadtest;
 
-import utils.StoppUhr;
+import de.hypoport.jop.multithreading.utils.StoppUhr;
 
 import java.util.concurrent.Callable;
 
@@ -18,8 +18,8 @@ public class Aufgabe implements Callable {
     try {
       simmuliereExternenCall();
       simmuliereErgebnisVerarbeitung();
+    } catch (InterruptedException e) {
     }
-    catch (InterruptedException e) {}
     Double dauer = uhr.dauer();
     System.out.println("Dauer Aufgabe " + seq + " ->" + dauer + " secs");
     return seq;

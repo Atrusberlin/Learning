@@ -1,4 +1,4 @@
-package spring;
+package de.hypoport.jop.multithreading.spring;
 
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
