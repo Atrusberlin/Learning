@@ -25,14 +25,26 @@ public class FutureTest {
   }
 
   @Test
-  public void testFutureGet() throws ExecutionException, InterruptedException {
+  public void get_blockiert_den_ausfuehrenden_Thread() throws ExecutionException, InterruptedException {
     Future<String> future = threadPoolExecutor.submit(new StringCallable());
 
+    System.out.println("Vor dem get().");
+    System.out.println("Ergebnis des asynchronen Aufrufs: " + future.get());
+    System.out.println("Nach dem get()");
+  }
+
+  @Test
+  public void isDone_zeigt_an_ob_der_Task_noch_laeuft() throws InterruptedException {
+    // given
+    Future<String> future = threadPoolExecutor.submit(new StringCallable());
+
+    // when
     while (!future.isDone() && !future.isCancelled()) {
       System.out.println("Task läuft noch, warte 1 Sekunde.");
       TimeUnit.SECONDS.sleep(1);
     }
-    System.out.println("Ergebnis des asynchronen Aufrufs: " + future.get());
+    // then
+
   }
 
   class StringCallable implements Callable<String> {
