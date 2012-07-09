@@ -17,3 +17,5 @@ tomcat/**
 *~
 *.swp
 .dbshell
+*.py
+*.pyc
