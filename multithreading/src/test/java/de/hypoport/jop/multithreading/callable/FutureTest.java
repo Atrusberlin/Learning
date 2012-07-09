@@ -1,6 +1,8 @@
 package de.hypoport.jop.multithreading.callable;
 
 import de.hypoport.jop.multithreading.utils.StoppUhr;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -14,9 +16,14 @@ public class FutureTest {
 
   private ThreadPoolExecutor threadPoolExecutor;
 
-  @BeforeMethod
-  protected void setUp() throws Exception {
+  @BeforeClass
+  protected void init() throws Exception {
     threadPoolExecutor = new ThreadPoolExecutor(20, 40, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(20));
+  }
+
+  @AfterClass
+  protected void tearDown() {
+    threadPoolExecutor.shutdownNow();
   }
 
   @Test
@@ -30,6 +37,13 @@ public class FutureTest {
     stoppUhr.gebeDauerAus();
 
     assertThat(futureErgebnis).isEqualTo("Aufruf beendet");
+  }
+
+  @Test(expectedExceptions = TimeoutException.class)
+  public void get_kann_mit_TimeOut_Parameter_aufgerufen_werden() throws ExecutionException, TimeoutException, InterruptedException {
+    Future<String> future = threadPoolExecutor.submit(new StringCallable());
+
+    future.get(1, TimeUnit.SECONDS);
   }
 
   @Test
@@ -55,7 +69,7 @@ public class FutureTest {
     log("Future.cancel(true) wird aufgerufen.");
     future.cancel(true);
 
-    // get() liefert die CacellationException zurück
+    // get() liefert die CancellationException zurück
     future.get();
 
     log("CancellationException wurde geworfen.");
