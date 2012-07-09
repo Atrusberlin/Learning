@@ -1,4 +1,4 @@
-package de.hypoport.jop.multithreading.spring;
+package de.hypoport.jop.multithreading.callable.spring;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -16,7 +16,7 @@ public class TestService {
   public Future<Integer> getInteger(Integer wertFuerTimeOutInSekunden) throws InterruptedException {
     log("Ausführung wird unterbrochen für " + wertFuerTimeOutInSekunden + " Sekunden.");
     TimeUnit.SECONDS.sleep(wertFuerTimeOutInSekunden);
-    log("Auführung wird fortgesetzt.");
+    log("Ausführung wird fortgesetzt.");
 
     return new AsyncResult<Integer>(wertFuerTimeOutInSekunden);
   }

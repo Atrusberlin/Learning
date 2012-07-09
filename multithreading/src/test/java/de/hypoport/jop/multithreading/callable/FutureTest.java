@@ -1,6 +1,5 @@
-package de.hypoport.jop.multithreading.futures;
+package de.hypoport.jop.multithreading.callable;
 
-import de.hypoport.jop.multithreading.tasks.AbstractForLoopTask;
 import de.hypoport.jop.multithreading.utils.StoppUhr;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -56,34 +55,18 @@ public class FutureTest {
     log("Future.cancel(true) wird aufgerufen.");
     future.cancel(true);
 
-    log("Ergebnis des Futures: " + future.get());
+    // get() liefert die CacellationException zurück
+    future.get();
 
     log("CancellationException wurde geworfen.");
     assertThat(future.isCancelled()).isTrue();
   }
 
-  class StringCallable implements Callable<String> {
+  @Test(expectedExceptions = ExecutionException.class)
+  public void callables_reichen_auch_Exceptions_durch() throws ExecutionException, InterruptedException {
+    Future<Object> future = threadPoolExecutor.submit(new ExceptionThrowingCallable());
 
-    @Override
-    public String call() throws Exception {
-      log("StringCallable wurde gestartet. call() ");
-      Thread.sleep(5000);
-      return "Aufruf beendet";
-    }
-  }
-
-  class BigintCallable extends AbstractForLoopTask {
-
-    protected BigintCallable(int maxIterations) {
-      super(maxIterations);
-    }
-
-    @Override
-    protected void checkThreadInterruption() {
-      if (Thread.currentThread().isInterrupted()) {
-        log("Task wurde unterbrochen, nach " + getIteration() + " Iterationen.");
-        throw new RuntimeException("Task beendet.");
-      }
-    }
+    // bei get() wird die Exception in eine ExecutionException gewrapped und ausgeliefert.
+    future.get();
   }
 }

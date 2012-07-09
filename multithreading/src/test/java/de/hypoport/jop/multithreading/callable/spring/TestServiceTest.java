@@ -1,4 +1,4 @@
-package de.hypoport.jop.multithreading.spring;
+package de.hypoport.jop.multithreading.callable.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
