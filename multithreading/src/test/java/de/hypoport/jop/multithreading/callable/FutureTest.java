@@ -14,11 +14,12 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class FutureTest {
 
-  private ThreadPoolExecutor threadPoolExecutor;
+  private ExecutorService threadPoolExecutor;
 
   @BeforeClass
   protected void init() throws Exception {
-    threadPoolExecutor = new ThreadPoolExecutor(20, 40, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(20));
+//    threadPoolExecutor = new ThreadPoolExecutor(20, 40, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(20));
+    threadPoolExecutor = Executors.newSingleThreadExecutor();
   }
 
   @AfterClass
@@ -29,10 +30,12 @@ public class FutureTest {
   @Test
   public void get_blockiert_den_Hauptthread() throws ExecutionException, InterruptedException {
     Future<String> future = threadPoolExecutor.submit(new StringCallable());
+    Future<String> future2 = threadPoolExecutor.submit(new StringCallable());
 
     StoppUhr stoppUhr = StoppUhr.startUhr();
     log("Vor dem future.get()");
     String futureErgebnis = future.get();
+    future2.get();
     log("Ergebnis des Futures:" + futureErgebnis);
     stoppUhr.gebeDauerAus();
 
@@ -81,6 +84,7 @@ public class FutureTest {
     Future<Object> future = threadPoolExecutor.submit(new ExceptionThrowingCallable());
 
     // bei get() wird die Exception in eine ExecutionException gewrapped und ausgeliefert.
+
     future.get();
   }
 }

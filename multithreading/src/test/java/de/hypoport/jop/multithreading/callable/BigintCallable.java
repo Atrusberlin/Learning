@@ -14,7 +14,7 @@ class BigintCallable extends AbstractForLoopTask {
   protected void checkThreadInterruption() {
     if (Thread.currentThread().isInterrupted()) {
       log("Task wurde unterbrochen, nach " + getIteration() + " Iterationen.");
-      throw new RuntimeException("Task beendet.");
+      // throw new RuntimeException("Task beendet.");
     }
   }
 }

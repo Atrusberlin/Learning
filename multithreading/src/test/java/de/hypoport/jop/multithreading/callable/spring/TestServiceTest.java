@@ -34,8 +34,8 @@ public class TestServiceTest extends AbstractTestNGSpringContextTests {
   @Test
   public void timeOut_mit_zwei_Threads() throws ExecutionException, InterruptedException, TimeoutException {
     // given
-    Future<Integer> future1 = testService.getInteger(4);
-    Future<Integer> future2 = testService.getInteger(7);
+    Future<Integer> future1 = testService.getInteger(400);
+    Future<Integer> future2 = testService.getInteger(700);
 
     // when
     log("Aufruf der Future.get()");
