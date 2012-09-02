@@ -26,12 +26,10 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>5.14.2</version>
         </dependency>
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert</artifactId>
-            <version>1.4</version>
         </dependency>
 
         <!-- cglib ist notwendig für die Codegenerierung der Spring-Proxy Beans-->
