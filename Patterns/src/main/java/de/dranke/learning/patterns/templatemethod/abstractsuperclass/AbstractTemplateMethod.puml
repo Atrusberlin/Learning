@@ -1,0 +1,27 @@
+@startuml
+
+Popup <|-- ErrorMessagePopup
+Popup <|-- InfoMessagePopup
+
+abstract class Popup {
+  public final void show();
+  protected abstract void onLoadCssResource();
+  protected abstract void onRenderHeader();
+  protected abstract void onRenderContents();
+  public final void close();
+}
+
+
+class ErrorMessagePopup {
+  protected void onLoadCssResource();
+  protected void onRenderHeader();
+  protected void onRenderContents();
+}
+
+class InfoMessagePopup {
+  protected void onLoadCssResource();
+  protected void onRenderHeader();
+  protected void onRenderContents();
+}
+
+@enduml
