@@ -7,6 +7,9 @@ package de.dranke.learning.patterns.templatemethod.abstractsuperclass;
 public abstract class Popup {
 
   public void show() {
+    System.out.println("loading css resources: " + cssResource().toString());
+    onRenderHeader();
+    onRenderContents();
     System.out.println("Show popup.");
   }
 
