@@ -18,6 +18,14 @@ abstract class PopupAbstract {
   # {abstract} onRenderHeader()
   # {abstract} onRenderContents()
 }
+note right of PopupAbstract
+  show() {
+    ...
+    initCss(cssResource());
+    onRenderHeader();
+    onRenderContents();
+    ...
+end note
 
 interface CssResource
 note left: repräsentatives Interface
@@ -33,5 +41,6 @@ class InfoMessagePopup {
   # onRenderHeader()
   # onRenderContents()
 }
+
 
 @enduml

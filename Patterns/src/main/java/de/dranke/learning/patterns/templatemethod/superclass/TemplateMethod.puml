@@ -19,7 +19,17 @@ class Dialog {
   # createHeader() : Widget
   # createBody() : Widget
   # createButtons() : Widget
+
+  - initCssResource()
 }
+
+Dialog *-- GwtPopupDialog : popupDialog
+
+class GwtPopupDialog {
+  # getContentPanel() : Panel
+}
+
+
 
 Dialog <|-- StandardDialog
 
@@ -36,5 +46,23 @@ class StandardDialog {
   + addButton() : Button
   + addSchließenHandler(ActionHandler handler)
 }
+
+IrgendeinDialogPresenter -- StandardDialog : view
+
+class IrgendeinDialogPresenter {
+  - model : Object
+  - initView()
+}
+
+note top of IrgendeinDialogPresenter
+  initView() {
+    ...
+    view.setUeberschrift("Dialog");
+    view.setImage(ImageType.HINWEIS);
+    view.setNachricht(...);
+    initBestaetigenButton(view.addButton());
+    initSchlieszenButton(view.addButton());
+
+end note
 
 @enduml
