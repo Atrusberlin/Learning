@@ -1,23 +1,9 @@
 package de.dranke.learning.patterns.templatemethod.abstractsuperclass;
 
-/**
- * User: Daniel
- * Date: 16.09.12
- */
-public abstract class Popup {
+/** User: Daniel Date: 16.09.12 */
+public interface Popup {
 
-  public void show() {
-    System.out.println("loading css resources: " + cssResource().toString());
-    onRenderHeader();
-    onRenderContents();
-    System.out.println("Show popup.");
-  }
+  void show();
 
-  public void hide() {
-    System.out.println("Hide popup.");
-  }
-
-  protected abstract CssResource cssResource();
-  protected abstract void onRenderHeader();
-  protected abstract void onRenderContents();
+  void hide();
 }

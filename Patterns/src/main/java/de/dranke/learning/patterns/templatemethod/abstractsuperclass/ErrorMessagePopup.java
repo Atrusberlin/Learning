@@ -1,10 +1,18 @@
 package de.dranke.learning.patterns.templatemethod.abstractsuperclass;
 
-/**
- * User: Daniel
- * Date: 16.09.12
- */
-public class ErrorMessagePopup extends Popup {
+/** User: Daniel Date: 16.09.12 */
+public class ErrorMessagePopup extends PopupAbstract {
+
+  private String irendWas;
+
+  // Konstruktor, um den Superkonstruktor zu umgehen.
+  public ErrorMessagePopup() {
+    initPopup();
+  }
+
+  private void initPopup() {
+
+  }
 
   @Override
   protected CssResource cssResource() {
@@ -22,7 +30,7 @@ public class ErrorMessagePopup extends Popup {
   }
 
   @Override
-  protected void onRenderContents() {
+  protected void onRenderContent() {
     System.out.println("Render ErrorMessageContent");
   }
 }

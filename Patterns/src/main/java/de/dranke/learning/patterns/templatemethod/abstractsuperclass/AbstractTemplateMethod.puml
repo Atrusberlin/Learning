@@ -1,27 +1,37 @@
 @startuml
 
-Popup <|-- ErrorMessagePopup
-Popup <|-- InfoMessagePopup
-
-abstract class Popup {
-  public final void show();
-  protected abstract void onLoadCssResource();
-  protected abstract void onRenderHeader();
-  protected abstract void onRenderContents();
-  public final void close();
+interface Popup {
+  + show()
+  + hide()
 }
 
+Popup <|-- PopupAbstract
+
+PopupAbstract <|-- ErrorMessagePopup
+PopupAbstract <|-- InfoMessagePopup
+
+abstract class PopupAbstract {
+  + final void show()
+  + final void close()
+
+  # {abstract} cssResource() : CssResource
+  # {abstract} onRenderHeader()
+  # {abstract} onRenderContents()
+}
+
+interface CssResource
+note left: repräsentatives Interface
 
 class ErrorMessagePopup {
-  protected void onLoadCssResource();
-  protected void onRenderHeader();
-  protected void onRenderContents();
+  # cssResource() : CssResource
+  # onRenderHeader()
+  # onRenderContents()
 }
 
 class InfoMessagePopup {
-  protected void onLoadCssResource();
-  protected void onRenderHeader();
-  protected void onRenderContents();
+  # onLoadCssResource() : CssResource
+  # onRenderHeader()
+  # onRenderContents()
 }
 
 @enduml

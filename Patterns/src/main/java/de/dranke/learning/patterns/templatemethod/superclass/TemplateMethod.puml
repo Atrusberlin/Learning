@@ -1,0 +1,40 @@
+@startuml
+
+interface Popup {
+  + void show()
+  + void close()
+}
+
+Popup <|-- Dialog
+
+class Dialog {
+  - headerContainer : FlowPanel
+  - bodyContainer : FlowPanel
+  - buttonContainer : FlowPanel
+
+  + final void show()
+  + final void hide()
+
+  # getCssResource() : CssResource
+  # createHeader() : Widget
+  # createBody() : Widget
+  # createButtons() : Widget
+}
+
+Dialog <|-- StandardDialog
+
+interface ActionHandler {
+  + doAction()
+}
+
+ActionHandler "many" -- "1" StandardDialog : > registeredCloseHandler
+
+class StandardDialog {
+  + setUeberschrift(String Ueberschrift)
+  + setImage(ImageType image)
+  + setNachrichten(String... nachrichten)
+  + addButton() : Button
+  + addSchließenHandler(ActionHandler handler)
+}
+
+@enduml
