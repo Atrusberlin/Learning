@@ -33,4 +33,9 @@ public class ErrorMessagePopup extends PopupAbstract {
   protected void onRenderContent() {
     System.out.println("Render ErrorMessageContent");
   }
+
+  @Override
+  protected void onClose() {
+    System.out.println("ErrorMessage closed.");
+  }
 }

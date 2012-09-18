@@ -14,14 +14,15 @@ public abstract class PopupAbstract {
     show();
   }
 
-  public void show() {
+  public final void show() {
     System.out.println("loading css resources: " + cssResource().toString());
     onRenderHeader();
     onRenderContent();
     System.out.println("Show popup.");
   }
 
-  public void hide() {
+  public final void hide() {
+    onClose();
     System.out.println("Hide popup.");
   }
 
@@ -30,4 +31,6 @@ public abstract class PopupAbstract {
   protected abstract void onRenderHeader();
 
   protected abstract void onRenderContent();
+
+  protected abstract void onClose();
 }

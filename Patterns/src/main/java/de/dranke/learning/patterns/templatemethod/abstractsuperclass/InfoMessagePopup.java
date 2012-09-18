@@ -18,6 +18,12 @@ public class InfoMessagePopup extends PopupAbstract {
     };
   }
 
+// ist nicht erlaubt!
+//  @Override
+//  public void show(){
+//    // do anything
+//  }
+
   @Override
   protected CssResource cssResource() {
     return css;
@@ -31,5 +37,10 @@ public class InfoMessagePopup extends PopupAbstract {
   @Override
   protected void onRenderContent() {
     System.out.println("Render InfoMessageContent");
+  }
+
+  @Override
+  protected void onClose() {
+    System.out.println("InfoMessage closed");
   }
 }

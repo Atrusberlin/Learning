@@ -1,5 +1,17 @@
 @startuml
 
+note as Hinweis
+<size:18><b>Pattern:</b> Template method
+
+<size:14>- Verhaltensbasiertes Pattern
+<size:14>- umgekehrter Kontrollfluss
+<size:14>- Hook-Methods / primitive Operations
+<size:14>- werden von der Template method aufgerufen
+<size:12>-- verhindern das vergessen von super()-Aufrufen
+<size:14>- nutzt Vererbung
+
+end note
+
 interface Popup {
   + show()
   + hide()
@@ -10,14 +22,18 @@ Popup <|-- PopupAbstract
 PopupAbstract <|-- ErrorMessagePopup
 PopupAbstract <|-- InfoMessagePopup
 
-abstract class PopupAbstract {
+class PopupAbstract {
+  .. template methods ..
   + final void show()
   + final void close()
-
+  ..
+  -- primetive operation methods --
   # {abstract} cssResource() : CssResource
   # {abstract} onRenderHeader()
   # {abstract} onRenderContents()
+  # {abstract} onClose()
 }
+
 note right of PopupAbstract
   show() {
     ...

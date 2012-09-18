@@ -23,13 +23,14 @@ class Dialog {
   - initCssResource()
 }
 
-Dialog *-- GwtPopupDialog : popupDialog
+Dialog -- DialogBoxMitKeyHandler : dialogBox
 
-class GwtPopupDialog {
-  # getContentPanel() : Panel
+class DialogBoxMitKeyHandler << gwt >>
+class DialogBoxMitKeyHandler {
+  .. beispielhafte Setter ..
+  + setAnimationEnabled(boolean enable)
+  + setAutoHideEnabled(boolean enable)
 }
-
-
 
 Dialog <|-- StandardDialog
 
@@ -51,7 +52,13 @@ IrgendeinDialogPresenter -- StandardDialog : view
 
 class IrgendeinDialogPresenter {
   - model : Object
+
+  + setModel()
+  + afterInjection()
+  .. einige init methoden ..
   - initView()
+  - initSchlieszenButton()
+  - initBestaetigenButton()
 }
 
 note top of IrgendeinDialogPresenter
@@ -62,6 +69,8 @@ note top of IrgendeinDialogPresenter
     view.setNachricht(...);
     initBestaetigenButton(view.addButton());
     initSchlieszenButton(view.addButton());
+
+    <i>Interaktion</i> <b>view.show()</b>
 
 end note
 
