@@ -13,6 +13,7 @@
     <module>Patterns</module>
     <module>unittesting</module>
     <module>multithreading</module>
+    <module>oop-design-lecture</module>
   </modules>
 
   <dependencyManagement>
