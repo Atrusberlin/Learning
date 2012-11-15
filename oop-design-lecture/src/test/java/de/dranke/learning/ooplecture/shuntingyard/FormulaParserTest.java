@@ -7,23 +7,25 @@ import org.testng.annotations.Test;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.testng.AssertJUnit.assertEquals;
 
-public class StringParserTest {
+public class FormulaParserTest {
 
-  private StringParser stringParser;
+  private FormulaParser formulaParser;
 
   @DataProvider
   public Object[][] formula_string_expressions() {
     return new Object[][] {
-//        {"", new String[0]},
-//        {null, new String[0]},
-//        {"4", toStringArray("4")},
-        {"4 + 3", toStringArray("4 3 +")}
+        {"", new String[0]},
+        {null, new String[0]},
+        {"4", toStringArray("4")},
+        {"4 + 3", toStringArray("4 3 +")},
+        {"4 + 3 - 2", toStringArray("4 3 2 + -")},
+        {"4 + 3 * 2 + 5", toStringArray("4 3 2 * + 5 +")}
     };
   }
 
   @BeforeMethod
   protected void setUp() throws Exception {
-    stringParser = new StringParser();
+    formulaParser = new FormulaParser();
   }
 
   @Test(dataProvider = "formula_string_expressions")
@@ -31,7 +33,7 @@ public class StringParserTest {
     // given
 
     // when
-    String[] actual = stringParser.toRPN(formulaAsString);
+    String[] actual = formulaParser.toRPN(formulaAsString);
 
     // then
     assertThat(actual).isEqualTo(expectedRPN);
