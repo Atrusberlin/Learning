@@ -4,6 +4,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.testng.AssertJUnit.assertEquals;
 
@@ -14,12 +15,13 @@ public class FormulaParserTest {
   @DataProvider
   public Object[][] formula_string_expressions() {
     return new Object[][] {
-        {"", new String[0]},
-        {null, new String[0]},
-        {"4", toStringArray("4")},
-        {"4 + 3", toStringArray("4 3 +")},
-        {"4 + 3 - 2", toStringArray("4 3 2 + -")},
-        {"4 + 3 * 2 + 5", toStringArray("4 3 2 * + 5 +")}
+        {"", ""},
+        {null, ""},
+        {"4", "4"},
+        {"4 + 3", "4 3 +"},
+        {"4 + 3 - 2", "4 3 + 2 -"},
+        {"4 + 3 * 2 + 5", "4 3 2 * + 5 +"},
+        {"4 + 3 * 2 + 5 / 1", "4 3 2 * + 5 1 / +"}
     };
   }
 
@@ -29,17 +31,18 @@ public class FormulaParserTest {
   }
 
   @Test(dataProvider = "formula_string_expressions")
-  public void toRPN_returns_correct_Reverse_Polish_Notation(String formulaAsString, String[] expectedRPN) {
+  public void toRPN_returns_correct_Reverse_Polish_Notation(String formulaAsString, String expectedRPN) {
     // given
 
     // when
     String[] actual = formulaParser.toRPN(formulaAsString);
 
     // then
-    assertThat(actual).isEqualTo(expectedRPN);
+    assertThat(actual).isEqualTo(toStringArray(expectedRPN));
   }
 
+  // ToDo [DRa, 16.11.12 )]: bad
   private String[] toStringArray(String string) {
-    return string.split(" ");
+    return isBlank(string) ? new String[0] : string.split(" ");
   }
 }

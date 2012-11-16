@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
+import static de.dranke.learning.ooplecture.shuntingyard.Operator.getOperation;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class FormulaParser {
@@ -11,25 +12,15 @@ public class FormulaParser {
   private final ArrayList<String> rpn = new ArrayList();
   private final Stack<Operator> operators = new Stack();
 
-  final static HashMap<Character, Operator> OPERATIONS = new HashMap() {
-    {
-      put("-", Operator.MINUS);
-      put("+", Operator.PLUS);
-      put("*", Operator.MULTIPLY);
-      put("/", Operator.DIVIDE);
-      put("^", Operator.EXP);
-    }
-  };
-
   public String[] toRPN(String formula) {
     String[] formulaAsArray = isBlank(formula) ? new String[0] : formula.split(" ");
 
     for (String item : formulaAsArray) {
-      if (item.matches("[0-9]")) {
-        rpn.add(item);
+      if (Operator.isSupported(item)) {
+        proceedOperator(item);
       }
       else {
-        proceedOperator(item);
+        rpn.add(item);
       }
     }
 
@@ -40,16 +31,20 @@ public class FormulaParser {
     return rpn.toArray(new String[0]);
   }
 
-  private void proceedOperator(String item) {
-    Operator itemOperator = OPERATIONS.get(item);
+  private void proceedOperator(String operator) {
+    Operator current = getOperation(operator);
     if (operators.isEmpty()) {
-      operators.push(OPERATIONS.get(item));
+      operators.push(current);
     }
-    else if (itemOperator.comparePreceedenceTo(operators.peek()) > 0) {
-      rpn.add(item);
+    else if (current.comparePreceedenceTo(operators.peek()) > 0) {
+      operators.push(current);
     }
     else {
-      operators.push(OPERATIONS.get(item));
+      while (!operators.isEmpty() && current.comparePreceedenceTo(operators.peek()) <= 0) {
+        rpn.add(operators.pop().getSymbol());
+      }
+
+      operators.push(current);
     }
   }
 }

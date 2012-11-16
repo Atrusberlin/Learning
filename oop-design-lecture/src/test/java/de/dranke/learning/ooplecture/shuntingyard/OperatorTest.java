@@ -31,4 +31,40 @@ public class OperatorTest {
 
     assertThat(operator.comparePreceedenceTo(toCompare)).isEqualTo(expectedDifference);
   }
+
+  @DataProvider
+  public Object[][] supportOperators() {
+    return new Object[][] {
+        {"+"},
+        {"-"},
+        {"*"},
+        {"/"},
+        {"^"}
+    };
+  }
+
+  @Test(dataProvider = "supportOperators")
+  public void isSupported_true(String operation) {
+    assertThat(Operator.isSupported(operation)).isTrue();
+  }
+
+  @Test(dataProvider = "supportOperators")
+  public void getOperator(String operator) {
+
+    // when
+    Operator actual = Operator.getOperation(operator);
+
+    // then
+    assertThat(actual).isNotNull();
+  }
+
+  @Test
+  public void getOperator_returns_null_if_operator_is_not_supported() {
+
+    // when
+    Operator actual = Operator.getOperation("notSupported");
+
+    // then
+    assertThat(actual).isNull();
+  }
 }
