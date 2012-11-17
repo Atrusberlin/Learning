@@ -1,6 +1,8 @@
-package de.dranke.learning.ooplecture.rpncalculator;
+package de.dranke.learning.ooplecture.rpncalculator.operation;
 
-public abstract class OperationTwoNumbers implements Operation {
+import de.dranke.learning.ooplecture.rpncalculator.Stack;
+
+abstract class OperationTwoNumbers implements Operation {
 
   @Override
   public final int execute(Stack stack) {
