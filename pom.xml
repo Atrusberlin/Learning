@@ -14,6 +14,7 @@
     <module>unittesting</module>
     <module>multithreading</module>
     <module>oop-design-lecture</module>
+    <module>CodeKatas</module>
   </modules>
 
   <dependencyManagement>
@@ -43,6 +44,11 @@
         <groupId>com.google.inject</groupId>
         <artifactId>guice</artifactId>
         <version>3.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
