@@ -15,6 +15,7 @@
     <module>multithreading</module>
     <module>oop-design-lecture</module>
     <module>CodeKatas</module>
+    <module>apache-commons</module>
   </modules>
 
   <dependencyManagement>
@@ -49,6 +50,11 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>3.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

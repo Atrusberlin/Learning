@@ -58,4 +58,13 @@ public class ArgsParserTest {
     // then
     assertThat(result).isFalse();
   }
+
+  @Test
+  public void parse_allows_schema_defined_flags_only() {
+    // given
+
+    // when
+
+    // then
+  }
 }
