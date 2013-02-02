@@ -1,8 +1,6 @@
 package de.dranke.learning.mongodb.api.administration;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
-import com.mongodb.WriteResult;
+import com.mongodb.*;
 import org.apache.log4j.Logger;
 import org.testng.annotations.*;
 
@@ -17,6 +15,7 @@ public class UserManagementTest {
   public static final String ADMIN = "admin";
   private Mongo mongoConnection;
   private DB authTestDb;
+  private DBCollection usersCollection;
 
   @BeforeClass
   public void init() throws UnknownHostException {
@@ -29,6 +28,7 @@ public class UserManagementTest {
   @BeforeMethod
   public void setUp() throws Exception {
     authTestDb = mongoConnection.getDB(TEST_DB);
+    usersCollection = authTestDb.getCollection("system.users");
     LOG.info("Database " + TEST_DB + " was opened.");
   }
 
@@ -56,17 +56,19 @@ public class UserManagementTest {
   }
 
   @Test
-  public void testAddUser_when_user_exists_already_leads_to_error() throws Exception {
+  public void testAddUser_aktualisiert_den_Eintrag_bei_erneutem_Aufruf() throws Exception {
     // given
     authTestDb.addUser("userOne", "userOnePwd".toCharArray());
+    assertThat(usersCollection.count()).isEqualTo(1);
 
     // when
     WriteResult result = authTestDb.addUser("userOne", "pw".toCharArray());
 
     // then
-    //assertThat(result.getLastError().ok()).isFalse();
-    LOG.debug("User was not added: " + result.getLastError().getErrorMessage());
-
+    assertThat(result.getLastError().ok()).isTrue();
+    assertThat(usersCollection.count()).isEqualTo(1);
+    assertThat(authTestDb.authenticate("userOne", "userOnePwd".toCharArray())).isFalse();
+    assertThat(authTestDb.authenticate("userOne", "pw".toCharArray())).isTrue();
   }
 
   @Test
@@ -79,6 +81,34 @@ public class UserManagementTest {
 
     // then
     assertThat(result.getLastError().ok()).isTrue();
+
+  }
+
+  @Test
+  public void testRemoveUser_if_the_user_doesnot_exists__not_error_() throws Exception {
+    // given
+
+    // when
+    WriteResult result = authTestDb.removeUser("userOne");
+
+    // then
+    assertThat(result.getLastError().ok()).isTrue();
+    assertThat(usersCollection.count()).isZero();
+  }
+
+  @Test
+  public void testReadOnlyUser_cannot_insert() throws Exception {
+    // given
+    authTestDb.addUser("reader", "reader".toCharArray(), true);
+    DB db = mongoConnection.getDB(TEST_DB);
+    db.authenticate("reader", "reader".toCharArray());
+    DBCollection test = db.getCollection("test");
+
+    // when
+    WriteResult result = test.insert(new BasicDBObject("key", "value"));
+
+    // then
+    assertThat(result.getError()).isNotNull();
 
   }
 }
