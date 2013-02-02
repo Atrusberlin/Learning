@@ -1,4 +1,6 @@
-use learn;
+// use learn;
+// mongo localhost/learn hits_setup.js
+
 db.hits.remove();
 
 db.hits.insert({resource: 'index', date: new Date(2010, 0, 20, 4, 30)});

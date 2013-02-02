@@ -1,4 +1,5 @@
-﻿use learn;
+﻿// use learn; --> funktioniert nicht, die DB muss beim mongo-Aufruf übergeben werden
+// mongo localhost/learn hits_setup.js
 // leeren der Collection durch entfernen der selben
 // db.unicorns.drop();
 db.unicorns.remove();
