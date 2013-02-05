@@ -19,14 +19,15 @@ public class UserManagementTest {
 
   @BeforeClass
   public void init() throws UnknownHostException {
-    mongoConnection = new Mongo();
-    DB adminDb = mongoConnection.getDB("admin");
-    boolean authenticated = adminDb.authenticate("admin", "admin".toCharArray());
-    LOG.info("User '" + ADMIN + "' is authenticated: " + authenticated);
+
   }
 
   @BeforeMethod
   public void setUp() throws Exception {
+    mongoConnection = new Mongo();
+    DB adminDb = mongoConnection.getDB("admin");
+    boolean authenticated = adminDb.authenticate("admin", "admin".toCharArray());
+    LOG.info("User '" + ADMIN + "' is authenticated: " + authenticated);
     authTestDb = mongoConnection.getDB(TEST_DB);
     usersCollection = authTestDb.getCollection("system.users");
     LOG.info("Database " + TEST_DB + " was opened.");
@@ -36,6 +37,7 @@ public class UserManagementTest {
   public void tearDown() {
     try {
       authTestDb.dropDatabase();
+      mongoConnection.close();
     } catch (Exception e) {
       LOG.error(TEST_DB + " was not dropped. " + e.toString());
     }
@@ -43,7 +45,6 @@ public class UserManagementTest {
 
   @AfterClass
   public void cleanUp() {
-    mongoConnection.close();
   }
 
   @Test
@@ -98,17 +99,26 @@ public class UserManagementTest {
 
   @Test
   public void testReadOnlyUser_cannot_insert() throws Exception {
-    // given
+    // setup
     authTestDb.addUser("reader", "reader".toCharArray(), true);
+    mongoConnection.close();
+
+    // given
+    mongoConnection = new Mongo();
     DB db = mongoConnection.getDB(TEST_DB);
+    assertThat(db.isAuthenticated()).isFalse();
     db.authenticate("reader", "reader".toCharArray());
     DBCollection test = db.getCollection("test");
+    assertThat(db.isAuthenticated()).isTrue();
+
 
     // when
     WriteResult result = test.insert(new BasicDBObject("key", "value"));
 
     // then
     assertThat(result.getError()).isNotNull();
+    assertThat(result.getError()).isEqualTo("unauthorized");
+    assertThat(test.count()).isZero();
 
   }
 }
