@@ -1,9 +1,6 @@
 package de.dranke.learning.mongodb.api.administration;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
+import com.mongodb.*;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
@@ -13,7 +10,9 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class AuthenticationTest {
 
+  public static final String DB_NAME = "newDb";
   private static final Logger LOG = Logger.getLogger(AuthenticationTest.class);
+  public static final int UNAUTHORIZED = 10057;
 
   @Test
   public void authenticateToAdminDatabase() throws Exception {
@@ -26,26 +25,37 @@ public class AuthenticationTest {
   }
 
   @Test
-  public void authenticationContainsToConnection() throws UnknownHostException {
-    Mongo mongo = new Mongo();
+  public void eine_Authentifizierung_gehoert_zu_einer_Verbindung() throws UnknownHostException {
+    Mongo connection1 = new Mongo();
+    authenticateToAdminCollection(connection1);
+
+    DB db1 = connection1.getDB(DB_NAME);
+    assertThat(db1.isAuthenticated()).isFalse();
+    insertDataIntoTestCollection(db1);
+    connection1.close();
+
+    Mongo connection2 = new Mongo();
+    DB db2 = connection2.getDB(DB_NAME);
+    assertThat(connection2.getDB("admin").isAuthenticated()).isFalse();
+    assertThat(db2.isAuthenticated()).isFalse();
+    try {
+      insertDataIntoTestCollection(db2);
+    } catch (MongoException e) {
+      LOG.error(e.getMessage() + "\n" + e.toString());
+      assertThat(e.getCode()).isEqualTo(UNAUTHORIZED);
+    }
+    connection2.close();
+  }
+
+  private void authenticateToAdminCollection(Mongo mongo) {
     DB adminDb = mongo.getDB("admin");
-
     assertThat(adminDb.authenticate("admin", "admin".toCharArray())).isTrue();
+  }
 
-    DB newDb = mongo.getDB("newDb");
-//    assertThat(newDb.isAuthenticated()).isTrue();
+  private void insertDataIntoTestCollection(DB newDb) {
     DBCollection test1 = newDb.getCollection("test1");
     test1.insert(new BasicDBObject("name", "Daniel"));
     assertThat(test1.count()).isEqualTo(1);
-    test1.drop();
-    mongo.close();
-
-    Mongo mongoCon2 = new Mongo();
-    DB newDb1 = mongoCon2.getDB("newDb");
-    assertThat(mongoCon2.getDB("admin").isAuthenticated()).isFalse();
-    assertThat(newDb1.isAuthenticated()).isFalse();
-    test1 = newDb.getCollection("test1");
-    test1.insert(new BasicDBObject("name", "Daniel"));
     test1.drop();
   }
 }
