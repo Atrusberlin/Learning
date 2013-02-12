@@ -6,6 +6,7 @@ import org.testng.annotations.*;
 
 import java.net.UnknownHostException;
 
+import static de.dranke.learning.mongodb.api.administration.AuthenticationTest.UNAUTHORIZED;
 import static org.fest.assertions.Assertions.assertThat;
 
 public class UserManagementTest {
@@ -93,6 +94,7 @@ public class UserManagementTest {
     WriteResult result = authTestDb.removeUser("userOne");
 
     // then
+    assertThat(result.getError()).isNull();
     assertThat(result.getLastError().ok()).isTrue();
     assertThat(usersCollection.count()).isZero();
   }
@@ -101,16 +103,14 @@ public class UserManagementTest {
   public void testReadOnlyUser_cannot_insert() throws Exception {
     // setup
     authTestDb.addUser("reader", "reader".toCharArray(), true);
-    mongoConnection.close();
 
     // given
-    mongoConnection = new Mongo();
-    DB db = mongoConnection.getDB(TEST_DB);
+    Mongo connection = new Mongo();
+    DB db = connection.getDB(TEST_DB);
     assertThat(db.isAuthenticated()).isFalse();
-    db.authenticate("reader", "reader".toCharArray());
+    assertThat(db.authenticate("reader", "reader".toCharArray()));
     DBCollection test = db.getCollection("test");
     assertThat(db.isAuthenticated()).isTrue();
-
 
     // when
     WriteResult result = test.insert(new BasicDBObject("key", "value"));
@@ -118,6 +118,7 @@ public class UserManagementTest {
     // then
     assertThat(result.getError()).isNotNull();
     assertThat(result.getError()).isEqualTo("unauthorized");
+    LOG.info("result: " + result.toString());
     assertThat(test.count()).isZero();
 
   }
