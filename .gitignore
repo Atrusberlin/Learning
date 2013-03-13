@@ -19,3 +19,4 @@ tomcat/**
 .dbshell
 *.py
 *.pyc
+plantuml-dependency.log
